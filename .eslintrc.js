@@ -6,20 +6,14 @@ module.exports = {
     },
     "extends": "eslint:recommended",
     "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
     "rules": {
-        "no-unused-vars": "warn",
+        "no-unused-vars": "off",
         "indent": [
             "error",
-            4
+            2
         ],
         "linebreak-style": [
             "error",
