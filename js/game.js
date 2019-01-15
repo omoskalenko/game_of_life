@@ -4,6 +4,9 @@ const GRID_ROWS = 36;
 const GRID_COLS = 64;
 const GRID_SPEED = 1000;
 
+const grid = createGrid( GRID_ROWS, GRID_COLS );
+const nextGrid = createGrid( GRID_ROWS, GRID_COLS );
+
 function createElement( tag, params ) {
   let element = document.createElement(tag);
   for (let param in params) {
@@ -19,8 +22,31 @@ function carry( tagName, fn ) {
 
 let isPlaying = false;
 
+function stopGame( button ) {
+  isPlaying = false;
+  button.textContent = 'play_arrow';
+  
+}
+function play( button ) {
+  isPlaying = true;
+  button.textContent = 'pause';
+  computeNextGrid();
+  updateView();
+}
+
 const root = document.querySelector( '#root' );
 
+function createGrid( rows, cols ) {
+  const  grid = [];
+  for (let i = 0; i < rows; i++) {
+    const cell = [];
+    for (let j = 0; j < cols; j++) {
+      cell.push(0);
+    }
+    grid.push(cell);
+  }
+  return grid;
+}
 function createTable( rows, cols ) {
   const table = createElement( 'table', { className: 'grid' } );
   for ( let i = 0; i < rows; i++ ) {
@@ -38,6 +64,7 @@ function createTable( rows, cols ) {
   root.appendChild(table);
   return table;
 }
+const createButton = carry('button', createElement);
 
 const table = createTable( GRID_ROWS, GRID_COLS );
 table.addEventListener('click', ({ target }) => {
@@ -45,9 +72,8 @@ table.addEventListener('click', ({ target }) => {
   event.stopPropagation();
   if(target.tagName !== 'TD') return;
   target.classList.toggle('alive');
+  updateGrid(target);
 });
-
-const createButton = carry('button', createElement);
 
 function createControl() {
   const startButton = createButton({
@@ -57,46 +83,83 @@ function createControl() {
   startButton.addEventListener('click', function() {
     event.preventDefault();
     if ( isPlaying ) {
-      isPlaying = false;
-      this.textContent = 'play_arrow';
+      stopGame(this);
     } else {
-      isPlaying = true;
-      this.textContent = 'pause';
+      play(this);
     }
   });
+
   const resetButton = createButton({
     className: 'material-icons',
     textContent: 'replay'
   });
   resetButton.addEventListener('click', function() {
     event.preventDefault();
-    if ( isPlaying ) {
-      isPlaying = false;
-      this.textContent = 'pause';
-    } else {
-      isPlaying = true;
-      this.textContent = 'play_arrow';
-    }
+    stopGame(startButton);
+    resetGrid();
+    updateView();
   });
+
   const randomizeButton = createButton({
     className: 'material-icons',
     textContent: 'transform'
   });
   randomizeButton.addEventListener('click', function() {
     event.preventDefault();
-    if ( isPlaying ) {
-      isPlaying = false;
-      this.textContent = 'pause';
-    } else {
-      isPlaying = true;
-      this.textContent = 'play_arrow';
-    }
+    stopGame(startButton);
+    randomizeGrid();
+    updateView();
   });
-  const container = createElement('div', {
-    className: 'controls'
-  });
+
+  const container = createElement('div', { className: 'controls' });
+
   container.append(startButton, resetButton, randomizeButton);
+
   return container;
 }
 
 root.appendChild(createControl());
+
+function updateGrid(cell, rows, cols) {
+  const colIndex = cell.cellIndex;
+  const rowIndex = cell.parentNode.rowIndex;
+
+  grid[rowIndex][colIndex] = cell.classList.contains('alive') ? 1 : 0;
+
+  return { 
+    statusCell: grid[rowIndex][colIndex],
+    x: colIndex,
+    y:rowIndex
+  };
+}
+function updateView(cell, rows, cols) {
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      const cell = table.rows[i].cells[j];
+      const isCellAlive = grid[i][j];
+      cell.classList.toggle('alive', isCellAlive);
+    }
+  }
+  return true;
+}
+function randomizeGrid() {
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      grid[i][j] =  Math.round(Math.random());
+    }
+  }
+  return grid;
+}
+function resetGrid() {
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      grid[i][j] =  0;
+    }
+  }
+  return grid;
+}
+
+function computeNextGrid() {
+  //
+}
+
