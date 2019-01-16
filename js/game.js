@@ -1,7 +1,7 @@
 const GRID_WIDTH = 1280;
 const GRID_HIGHT = 720;
-const GRID_ROWS = 36;
-const GRID_COLS = 64;
+const GRID_ROWS = 72;
+const GRID_COLS = 128;
 const GAME_SPEED = 100;
 
 const grid = createGrid(GRID_ROWS, GRID_COLS);
