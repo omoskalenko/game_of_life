@@ -119,8 +119,8 @@ function createControl() {
 
   const speedSlider = createElement('input', {
     type: 'range',
-    min: 900,
-    max: 100,
+    min: 0,
+    max: 900,
     step: 50
   });
   speedSlider.addEventListener('change', ({ target }) => {
