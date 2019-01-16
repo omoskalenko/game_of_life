@@ -2,7 +2,7 @@ const GRID_WIDTH = 1280;
 const GRID_HIGHT = 720;
 const GRID_ROWS = 36;
 const GRID_COLS = 64;
-const GAME_SPEED = 1000;
+const GAME_SPEED = 100;
 
 const grid = createGrid(GRID_ROWS, GRID_COLS);
 const nextGrid = createGrid(GRID_ROWS, GRID_COLS);
@@ -119,9 +119,9 @@ function createControl() {
 
   const speedSlider = createElement('input', {
     type: 'range',
-    min: 0,
-    max: 900,
-    step: 100
+    min: 900,
+    max: 100,
+    step: 50
   });
   speedSlider.addEventListener('change', ({ target }) => {
     clearInterval(interval);
