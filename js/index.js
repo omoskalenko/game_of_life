@@ -1,3 +1,6 @@
+/* global Game */
+
+
 const GRID_WIDTH = 1280;
 const GRID_HIGHT = 720;
 const GRID_ROWS = 36;
