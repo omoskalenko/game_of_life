@@ -15,7 +15,17 @@ class Cell {
     td.className = 'cell';
     td.width = this.width;
     td.height = this.height;
-
     this.element = td;
+
+    td.addEventListener('click', this.handleClick.bind(this));
+  }
+
+  handleClick() {
+    this.toggle();
+  }
+
+  toggle() {
+    this.isAlive = !this.isAlive;
+    this.element.classList.toggle( 'alive', this.isAlive );
   }
 }
