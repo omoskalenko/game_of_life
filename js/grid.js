@@ -14,6 +14,7 @@ class Grid {
     this.nextGrid = [];
 
     this.init();
+    this.randomize();
   }
 
   init() {
@@ -37,5 +38,17 @@ class Grid {
       table.appendChild(tr);    
     }
     this.element = table;
+  }
+
+  randomize() {
+    for (let i = 0; i < this.gridRows; i++) {
+      for (let j = 0; j < this.gridCols; j++) {
+        const cell = this.grid[i][j];
+
+        cell.isAlive = !!Math.round(Math.random());
+        cell.toggle();
+      }
+      
+    }
   }
 }
