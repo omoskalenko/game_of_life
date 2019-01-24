@@ -13,19 +13,22 @@ class Grid {
     this.grid = [];
     this.nextGrid = [];
 
-    this.init();
+    this._init();
     this.randomize();
   }
-  _forEachCell(fn) {
-    for (let i = 0; i < this.gridRows; i++) {
-      for (let j = 0; j < this.gridCols; j++) {
-        const cell = this.grid[i][j];
-        fn(cell);
-      }
-    }
+
+  reset() {
+    this._forEachCell(cell => {
+      cell.alive = false;
+    });
+  }
+  randomize() {
+    this._forEachCell(cell => {
+      cell.alive = !!Math.round(Math.random());
+    });
   }
 
-  init() {
+  _init() {
     const table = document.createElement('table');
     table.className = 'grid';
 
@@ -47,16 +50,13 @@ class Grid {
     }
     this.element = table;
   }
-
-  reset() {
-    this._forEachCell(cell => {
-      cell.alive = false;
-    });
-  }
-  randomize() {
-    this._forEachCell(cell => {
-      cell.alive = !!Math.round(Math.random());
-    });
-  }
   
+  _forEachCell(fn) {
+    for (let i = 0; i < this.gridRows; i++) {
+      for (let j = 0; j < this.gridCols; j++) {
+        const cell = this.grid[i][j];
+        fn(cell);
+      }
+    }
+  }
 }

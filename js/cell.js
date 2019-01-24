@@ -7,7 +7,7 @@ class Cell {
 
     this.width = width;
     this.height = height;
-    this.init();
+    this._init();
   }
   _toggle() {
     this._isAlive = !this._isAlive;
@@ -23,17 +23,17 @@ class Cell {
     this._toggle();
   }
 
-  init() {
+  _init() {
     const td = document.createElement('td');
     td.className = 'cell';
     td.width = this.width;
     td.height = this.height;
     this.element = td;
 
-    td.addEventListener('click', this.handleClick.bind(this));
+    td.addEventListener('click', this._handleClick.bind(this));
   }
 
-  handleClick() {
+  _handleClick() {
     this._toggle();
   }
 
