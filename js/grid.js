@@ -8,6 +8,8 @@ class Grid {
 
     this.grid = [];
     this.nextGrid = [];
+
+    init();
   }
 
   init() {
