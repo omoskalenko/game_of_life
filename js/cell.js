@@ -19,7 +19,7 @@ class Cell {
   }
 
   set alive(state) {
-    this._isAlive = state;
+    this._isAlive = !state;
     this._toggle();
   }
 

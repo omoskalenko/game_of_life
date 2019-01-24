@@ -8,13 +8,41 @@ class Grid {
     this.cellWidth = gridWidth / gridCols;
     this.cellHeight = gridHeight / gridRows;
     this.element = null;
-    
+
 
     this.grid = [];
     this.nextGrid = [];
 
     this._init();
-    this.randomize();
+  }
+
+  next() {
+    this._forEachCell(cell => {
+      const numberOfNeighborth = this._numberOfNeighborth(cell);
+
+      if(cell.alive) {
+        if (numberOfNeighborth < 2) {
+          // Cell dies
+          this.nextGrid[cell.row][cell.col] = false;
+        } else if (numberOfNeighborth === 2 || numberOfNeighborth === 3) {
+          // Cell lives
+          this.nextGrid[cell.row][cell.col] = true;
+        } else if (numberOfNeighborth > 3) {
+          // Cell dies
+          this.nextGrid[cell.row][cell.col] = false;
+        }
+      } else {
+        if (numberOfNeighborth === 3) {
+          // Cell lives
+          this.nextGrid[cell.row][cell.col] = true;
+        }
+      }
+    });
+
+    this._forEachCell(cell => {
+      cell.alive = this.nextGrid[cell.row][cell.col];
+      this.nextGrid[cell.row][cell.col] = false;
+    });
   }
 
   reset() {
@@ -46,11 +74,30 @@ class Grid {
         tr.appendChild(cell.element);
       }
 
-      table.appendChild(tr);    
+      table.appendChild(tr);
     }
     this.element = table;
   }
-  
+  _numberOfNeighborth({ row, col }) {
+    let count = 0;
+
+    if(this._isNeighborthAlive(row - 1, col - 1)) count ++;
+    if(this._isNeighborthAlive(row - 1, col))     count ++;
+    if(this._isNeighborthAlive(row - 1, col + 1)) count ++;
+    if(this._isNeighborthAlive(row, col + 1))     count ++;
+    if(this._isNeighborthAlive(row + 1, col + 1)) count ++;
+    if(this._isNeighborthAlive(row + 1, col))     count ++;
+    if(this._isNeighborthAlive(row + 1, col - 1)) count ++;
+    if(this._isNeighborthAlive(row, col - 1))     count ++;
+
+    return count;
+  }
+  _isNeighborthAlive(row, col) {
+    // if (this.grid[row][col] == 1) return false;
+    if ( !this.grid[row] || !this.grid[row][col]) return false;
+
+    return this.grid[row][col].alive;
+  }
   _forEachCell(fn) {
     for (let i = 0; i < this.gridRows; i++) {
       for (let j = 0; j < this.gridCols; j++) {
