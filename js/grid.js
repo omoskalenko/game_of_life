@@ -16,6 +16,14 @@ class Grid {
     this.init();
     this.randomize();
   }
+  _forEachCell(fn) {
+    for (let i = 0; i < this.gridRows; i++) {
+      for (let j = 0; j < this.gridCols; j++) {
+        const cell = this.grid[i][j];
+        fn(cell);
+      }
+    }
+  }
 
   init() {
     const table = document.createElement('table');
@@ -40,15 +48,15 @@ class Grid {
     this.element = table;
   }
 
-  randomize() {
-    for (let i = 0; i < this.gridRows; i++) {
-      for (let j = 0; j < this.gridCols; j++) {
-        const cell = this.grid[i][j];
-
-        cell.isAlive = !!Math.round(Math.random());
-        cell.toggle();
-      }
-      
-    }
+  reset() {
+    this._forEachCell(cell => {
+      cell.alive = false;
+    });
   }
+  randomize() {
+    this._forEachCell(cell => {
+      cell.alive = !!Math.round(Math.random());
+    });
+  }
+  
 }

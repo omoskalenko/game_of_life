@@ -2,12 +2,25 @@ class Cell {
   constructor(width, height, row, col, alive = false) {
     this.row = row;
     this.col = col;
-    this.isAlive = alive;
+    this._isAlive = alive;
     this.element = null;
 
     this.width = width;
     this.height = height;
     this.init();
+  }
+  _toggle() {
+    this._isAlive = !this._isAlive;
+    this.element.classList.toggle( 'alive', this._isAlive );
+  }
+
+  get alive() {
+    return this._isAlive;
+  }
+
+  set alive(state) {
+    this._isAlive = state;
+    this._toggle();
   }
 
   init() {
@@ -21,11 +34,7 @@ class Cell {
   }
 
   handleClick() {
-    this.toggle();
+    this._toggle();
   }
 
-  toggle() {
-    this.isAlive = !this.isAlive;
-    this.element.classList.toggle( 'alive', this.isAlive );
-  }
 }
