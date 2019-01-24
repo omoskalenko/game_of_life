@@ -9,7 +9,7 @@ class Grid {
     this.grid = [];
     this.nextGrid = [];
 
-    init();
+    this.init();
   }
 
   init() {
@@ -17,10 +17,9 @@ class Grid {
       this.grid[i] = [];
       this.nextGrid[i] = [];
       for (let j = 0; j < this.gridCols; j++) {
-        this.this.grid[i][j] = new Cell(i, j);
-        this.this.nextGrid[i][j] = false;
+        this.grid[i][j] = new Cell(i, j);
+        this.nextGrid[i][j] = false;
       }
-      
     }
   }
 }
