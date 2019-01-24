@@ -6,15 +6,15 @@ class Cell {
     this.element = null;
 
     this.width = width;
-    this.hight = height;
+    this.height = height;
     this.init();
   }
 
   init() {
     const td = document.createElement('td');
     td.className = 'cell';
-    td.style.width = this.width;
-    td.style.hight = this.hight;
+    td.width = this.width;
+    td.height = this.height;
 
     this.element = td;
   }

@@ -6,7 +6,7 @@ class Grid {
     this.gridRows = gridRows;
     this.gridCols = gridCols;
     this.cellWidth = gridWidth / gridCols;
-    this.cellHight = gridHeight / gridRows;
+    this.cellHeight = gridHeight / gridRows;
     this.element = null;
     
 
@@ -27,7 +27,7 @@ class Grid {
       this.grid[i] = [];
       this.nextGrid[i] = [];
       for (let j = 0; j < this.gridCols; j++) {
-        const cell = new Cell(this.cellWidth, this.cellHight, i, j);
+        const cell = new Cell(this.cellWidth, this.cellHeight, i, j);
         this.grid[i][j] = cell;
         this.nextGrid[i][j] = false;
 
