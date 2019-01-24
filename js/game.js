@@ -7,10 +7,11 @@ class Game {
     this.gridRows = gridRows;
     this.gridCols = gridCols;
     this.root = rootElement;
+    this.controls = {};
 
     this.grid = new Grid(gridWidth, gridHeight, gridRows, gridCols); //композиция
     this.isPlaying = false;
-    this.speed = 1000;
+    this.speed = 450;
     this.interval = null;
     this.element = null;
 
@@ -24,11 +25,14 @@ class Game {
 
   play() {
     this.isPlaying = true;
+    this.controls.startButton.textContent = 'pause';
     this._starInterval();
+    
   }
 
   pause() {
     this.isPlaying = false;
+    this.controls.startButton.textContent = 'play_arrow';
     this._stopInterval();
   }
 
@@ -43,8 +47,8 @@ class Game {
     this.grid.randomize();
   }
 
-  changeSpeed(target) {
-    this.speed = 1000 - target.value;
+  changeSpeed(value) {
+    this.speed = 1000 - value;
   }
 
   _init() {
@@ -60,19 +64,17 @@ class Game {
     startButton.addEventListener('click', () => {
       if (this.isPlaying) {
         this.pause();
-        startButton.textContent = 'play_arrow';
       } else {
         this.play();
-        startButton.textContent = 'pause';
       }
     });
+    this.controls.startButton = startButton;
     const resetButton = createButton({
       className: 'material-icons',
       textContent: 'replay'
     });
     resetButton.addEventListener('click', () => {
       this.reset();
-      startButton.textContent = 'play_arrow';
     });
     const randomizeButton = createButton({
       className: 'material-icons',
@@ -85,10 +87,11 @@ class Game {
       type: 'range',
       min: 0,
       max: 1000,
-      step: 50
+      step: 50,
+      value: this.speed
     });
     speedSlider.addEventListener('change', ({ target }) => {
-      this.changeSpeed(target);
+      this.changeSpeed(target.value);
       this.pause();
       this.play();
     });

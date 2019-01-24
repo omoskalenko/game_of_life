@@ -50,6 +50,7 @@ class Grid {
       cell.alive = false;
     });
   }
+
   randomize() {
     this._forEachCell(cell => {
       cell.alive = !!Math.round(Math.random());
@@ -78,6 +79,7 @@ class Grid {
     }
     this.element = table;
   }
+
   _numberOfNeighborth({ row, col }) {
     let count = 0;
 
@@ -92,12 +94,14 @@ class Grid {
 
     return count;
   }
+
   _isNeighborthAlive(row, col) {
     // if (this.grid[row][col] == 1) return false;
     if ( !this.grid[row] || !this.grid[row][col]) return false;
 
     return this.grid[row][col].alive;
   }
+  
   _forEachCell(fn) {
     for (let i = 0; i < this.gridRows; i++) {
       for (let j = 0; j < this.gridCols; j++) {

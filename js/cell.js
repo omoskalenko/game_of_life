@@ -9,6 +9,7 @@ class Cell {
     this.height = height;
     this._init();
   }
+  
   _toggle() {
     this._isAlive = !this._isAlive;
     this.element.classList.toggle( 'alive', this._isAlive );
