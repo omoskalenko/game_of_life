@@ -1,17 +1,24 @@
 /*global Grid */
 
 class Game {
-  constructor(gridWidth, gridHight, gridRows, gridCols, rootElement) {
+  constructor(gridWidth, gridHeight, gridRows, gridCols, rootElement) {
     this.gridWidth = gridWidth;
-    this.gridHight = gridHight;
+    this.gridHeight = gridHeight;
     this.gridRows = gridRows;
     this.gridCols = gridCols;
+    this.root = rootElement;
 
-    this.grid = new Grid(gridWidth, gridHight, gridRows, gridCols); //композиция
+    this.grid = new Grid(gridWidth, gridHeight, gridRows, gridCols); //композиция
     this.isPlaying = false;
     this.speed = 1000;
     this.interval = null; 
-    this.element = rootElement;
+    this.element = null;
+
+    this.init();
+  }
+
+  init() {
+    this.root.appendChild(this.grid.element);
   }
 
 }

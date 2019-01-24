@@ -1,10 +1,14 @@
 /*global Cell */
 class Grid {
-  constructor(gridWidth, gridHight, gridRows, gridCols) {
+  constructor(gridWidth, gridHeight, gridRows, gridCols) {
     this.gridWidth = gridWidth;
-    this.gridHight = gridHight;
+    this.gridHeight = gridHeight;
     this.gridRows = gridRows;
     this.gridCols = gridCols;
+    this.cellWidth = gridWidth / gridCols;
+    this.cellHight = gridHeight / gridRows;
+    this.element = null;
+    
 
     this.grid = [];
     this.nextGrid = [];
@@ -13,13 +17,25 @@ class Grid {
   }
 
   init() {
+    const table = document.createElement('table');
+    table.className = 'grid';
+
     for (let i = 0; i < this.gridRows; i++) {
+      const tr = document.createElement('tr');
+      tr.className = 'row';
+
       this.grid[i] = [];
       this.nextGrid[i] = [];
       for (let j = 0; j < this.gridCols; j++) {
-        this.grid[i][j] = new Cell(i, j);
+        const cell = new Cell(this.cellWidth, this.cellHight, i, j);
+        this.grid[i][j] = cell;
         this.nextGrid[i][j] = false;
+
+        tr.appendChild(cell.element);
       }
+
+      table.appendChild(tr);    
     }
+    this.element = table;
   }
 }
