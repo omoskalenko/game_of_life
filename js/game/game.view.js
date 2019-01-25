@@ -20,12 +20,8 @@ export default class View {
     this._render();
   }
 
-  updateCell(cell) {
-    this.gridView.updateCell(cell);
-  }
-
   updateGrid(grid) {
-    this.gridView.updateGrid(grid);
+    this.gridView.update(grid);
   }
 
   updateControls(isPlaying) {

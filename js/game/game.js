@@ -17,7 +17,7 @@ export default class Game {
   toggleCellState(row, col) {
     const cell = this._grid.toggleCellState(row, col);
 
-    this.onCellStateChange(cell);
+    this.onGridStateChange(cell);
   }
 
   next() {

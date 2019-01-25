@@ -17,6 +17,6 @@ const root = document.getElementById('root');
 const game = new Game(GRID_ROWS, GRID_COLS);
 const tableGridView = new TableGridView(GRID_WIDTH, GRID_HEIGHT, GRID_ROWS, GRID_COLS);
 const canvasGridView = new CanvasGridView(GRID_WIDTH, GRID_HEIGHT, GRID_ROWS, GRID_COLS);
-const view = new View(canvasGridView, root);
+const view = new View(tableGridView, root);
 const controller = new Controller(game, view);
 

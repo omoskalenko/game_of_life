@@ -16,7 +16,7 @@ export default class Grid {
 
     cell.toggleState();
 
-    return cell;
+    return this._grid;
   }
 
   next() {

@@ -13,20 +13,15 @@ export default class TableGridView extends GridView {
     return this._table;
   }
 
-  updateCell(cell) {
-    const tableCell = this._table.rows[cell.row].cells[cell.col];
-    tableCell.classList.toggle('alive', cell.isAlive);
-  }
-  
-  updateGrid(grid) {
+  update(grid) {
     this._forEachCell((tableCell, rowIndex, cellIndex) => {
       this._updateCell(tableCell, grid[rowIndex][cellIndex]);
     });
   }
 
-  resetGrid() {
+  reset() {
     this._forEachCell(tableCell => {
-      this._resetCell(tableCell)
+      this._resetCell(tableCell);
     });
   }
 

@@ -17,13 +17,13 @@ export default class CanvasGridView extends GridView {
     return this._canvas;
   }
 
-  updateGrid(grid) {
+  update(grid) {
     this._clearGrid();
     this._drawGrid();
     this._drawCells(grid);
   }
 
-  resetGrid() {
+  reset() {
     this._clearGrid();
     this._drawGrid();
   }

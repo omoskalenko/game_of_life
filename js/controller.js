@@ -3,7 +3,6 @@ export default class Controller {
     this.game = game;
     this.view = view;
 
-    this.game.onCellStateChange = cell => view.updateCell(cell);
     this.game.onGridStateChange = grid => view.updateGrid(grid);
 
     this.view.onGridClick = (row, col) => game.toggleCellState(row, col);
