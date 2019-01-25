@@ -46,7 +46,7 @@ export default class Game {
     if(this.isPlaying) {
       this.pause();
     } else {
-      this.play;
+      this.play();
     }
   }
 
@@ -58,6 +58,8 @@ export default class Game {
 
   changeSpeed(value) {
     this.speed = 1000 - value;
+    this._stopInterval();
+    this._starInterval();
   }
 
   _starInterval() {
