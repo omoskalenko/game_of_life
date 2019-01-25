@@ -1,9 +1,9 @@
-import Cell from './cell.js';
+import Cell from '../cell/cell.js';
 
 export default class Grid {
   constructor(gridRows, gridCols) {
-    this.gridRows = gridRows;
-    this.gridCols = gridCols;
+    this._gridRows = gridRows;
+    this._gridCols = gridCols;
 
     this._grid = [];
     this._nextGrid = [];

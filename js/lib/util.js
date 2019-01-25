@@ -13,15 +13,18 @@ function createElement(tag, props, ...children) {
   }
   if(children) {
     for (let child of children) {
-      element.append(child);
+      if (typeof child === 'string') {
+        child = document.createTextNode(child);
+      }
+      element.appendChild(child);
     }
   }
   return element;
 }
 
 function carry(tagName, fn) {
-  return function (attr) {
-    return fn(tagName, attr);
+  return function (...atrr) {
+    return fn(tagName, ...atrr);
   };
 }
 
