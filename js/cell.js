@@ -1,41 +1,28 @@
 export default class Cell {
-  constructor(width, height, row, col, alive = false) {
+  constructor(row, col, alive = false) {
     this.row = row;
     this.col = col;
     this._isAlive = alive;
-    this.element = null;
-
-    this.width = width;
-    this.height = height;
-    this._init();
-  }
-  
-  _toggle() {
-    this._isAlive = !this._isAlive;
-    this.element.classList.toggle( 'alive', this._isAlive );
   }
 
-  get alive() {
+  get isAlive() {
     return this._isAlive;
   }
 
-  set alive(state) {
-    this._isAlive = !state;
-    this._toggle();
+  set isAlive(state) {
+    this._isAlive = state;
+  }
+  
+  toggleState() {
+    this._isAlive = !this._isAlive;
   }
 
-  _init() {
-    const td = document.createElement('td');
-    td.className = 'cell';
-    td.width = this.width;
-    td.height = this.height;
-    this.element = td;
-
-    td.addEventListener('click', this._handleClick.bind(this));
+  resetState() {
+    this._isAlive = false;
   }
 
-  _handleClick() {
-    this._toggle();
+  setRandomeState() {
+    this._isAlive = !!Math.round(Math.random());
   }
 
 }

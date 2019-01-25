@@ -1,84 +1,64 @@
 import Cell from './cell.js';
 
 export default class Grid {
-  constructor(gridWidth, gridHeight, gridRows, gridCols) {
-    this.gridWidth = gridWidth;
-    this.gridHeight = gridHeight;
+  constructor(gridRows, gridCols) {
     this.gridRows = gridRows;
     this.gridCols = gridCols;
-    this.cellWidth = gridWidth / gridCols;
-    this.cellHeight = gridHeight / gridRows;
-    this.element = null;
 
-
-    this.grid = [];
-    this.nextGrid = [];
+    this._grid = [];
+    this._nextGrid = [];
 
     this._init();
   }
 
   next() {
+    //Применяем правила для всех ячеек в новую сетку
     this._forEachCell(cell => {
       const numberOfNeighborth = this._countOfNeighborth(cell);
 
-      if(cell.alive) {
+      if(cell.isAlive) {
         if (numberOfNeighborth < 2) {
           // Cell dies
-          this.nextGrid[cell.row][cell.col] = false;
+          this._nextGrid[cell.row][cell.col] = false;
         } else if (numberOfNeighborth === 2 || numberOfNeighborth === 3) {
           // Cell lives
-          this.nextGrid[cell.row][cell.col] = true;
+          this._nextGrid[cell.row][cell.col] = true;
         } else if (numberOfNeighborth > 3) {
           // Cell dies
-          this.nextGrid[cell.row][cell.col] = false;
+          this._nextGrid[cell.row][cell.col] = false;
         }
       } else {
         if (numberOfNeighborth === 3) {
           // Cell lives
-          this.nextGrid[cell.row][cell.col] = true;
+          this._nextGrid[cell.row][cell.col] = true;
         }
       }
     });
-
+    //Копируем состояния ячеек из новой сетки в основную
     this._forEachCell(cell => {
-      cell.alive = this.nextGrid[cell.row][cell.col];
-      this.nextGrid[cell.row][cell.col] = false;
+      cell.isAlive = this._nextGrid[cell.row][cell.col];
+      this._nextGrid[cell.row][cell.col] = false;
     });
   }
 
   reset() {
-    this._forEachCell(cell => {
-      cell.alive = false;
-    });
+    this._forEachCell(cell => cell.resetState());
   }
 
   randomize() {
-    this._forEachCell(cell => {
-      cell.alive = !!Math.round(Math.random());
-    });
+    this._forEachCell(cell => cell.setRandomeState());
   }
 
   _init() {
-    const table = document.createElement('table');
-    table.className = 'grid';
-
-    for (let i = 0; i < this.gridRows; i++) {
-      const tr = document.createElement('tr');
-      tr.className = 'row';
-
-      this.grid[i] = [];
-      this.nextGrid[i] = [];
-      for (let j = 0; j < this.gridCols; j++) {
-        const cell = new Cell(this.cellWidth, this.cellHeight, i, j);
-        this.grid[i][j] = cell;
-        this.nextGrid[i][j] = false;
-
-        tr.appendChild(cell.element);
+    for (let i = 0; i < this._gridRows; i++) {
+      this._grid[i] = [];
+      this._nextGrid[i] = [];
+      for (let j = 0; j < this._gridCols; j++) {
+        const cell = new Cell(i, j);
+        this._grid[i][j] = cell;
+        this._nextGrid[i][j] = false;
       }
-
-      table.appendChild(tr);
     }
-    this.element = table;
   }
 
   _countOfNeighborth({ row, col }) {
@@ -98,15 +78,15 @@ export default class Grid {
 
   _isCellAlive(row, col) {
     // if (this.grid[row][col] == 1) return false;
-    if ( !this.grid[row] || !this.grid[row][col]) return false;
+    if ( !this._grid[row] || !this._grid[row][col]) return false;
 
-    return this.grid[row][col].alive;
+    return this._grid[row][col].isAlive;
   }
   
   _forEachCell(fn) {
-    for (let i = 0; i < this.gridRows; i++) {
-      for (let j = 0; j < this.gridCols; j++) {
-        const cell = this.grid[i][j];
+    for (let i = 0; i < this._gridRows; i++) {
+      for (let j = 0; j < this._gridCols; j++) {
+        const cell = this._grid[i][j];
         fn(cell);
       }
     }
