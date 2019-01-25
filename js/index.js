@@ -1,6 +1,7 @@
 import Game from './game/game.js';
 import View from './game/game.view.js';
 import GridView from './grid/grid.view.js';
+import Controller from './controller.js';
 
 /* global GridView */
 
@@ -14,5 +15,5 @@ const root = document.getElementById('root');
 const game = new Game(GRID_ROWS, GRID_COLS);
 const gridView = new GridView(GRID_WIDTH, GRID_HEIGHT, GRID_ROWS, GRID_COLS);
 const view = new View(gridView, root);
-
+const controller = new Controller(game, view);
 

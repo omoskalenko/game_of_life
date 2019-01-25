@@ -11,6 +11,12 @@ export default class Game {
     this.next = this.next.bind(this);
   }
 
+  toggleCellState(row, col) {
+    const cell = this._grid.toggleCellState(row, col);
+
+    this.onCellStateChange(cell);
+  }
+
   next() {
     this._grid.next();
   }

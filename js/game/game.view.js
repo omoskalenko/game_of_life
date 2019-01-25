@@ -8,11 +8,15 @@ export default class View {
     this._controls = {};
     this._controlElements = null;
 
-    this._init();
   }
-  _init() {
+  init() {
+    this.gridView.onClick = this.onGridClick;
     this._createControls();
     this._render();
+  }
+
+  updateCell(cell) {
+    this.gridView.updateCell(cell);
   }
 
   _createControls() {

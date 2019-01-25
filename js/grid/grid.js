@@ -11,6 +11,14 @@ export default class Grid {
     this._init();
   }
 
+  toggleCellState(row, col) {
+    const cell = this._grid[row][col];
+
+    cell.toggleState();
+
+    return cell;
+  }
+
   next() {
     //Применяем правила для всех ячеек в новую сетку
     this._forEachCell(cell => {

@@ -10,16 +10,22 @@ export default class GridView {
     this.cols = cols;
 
     this._table = null;
-
+    this.onClick = Function.prototype;
     this._init();
   }
 
   get element() {
     return this._table;
   }
+
+  updateCell(cell) {
+    const tableCell = this._table.rows[cell.row].cells[cell.col];
+    tableCell.classList.toggle('alive', cell.isAlive);
+  }
   
   _init() {
     this._createTable();
+    this._handleEvents();
   }
 
   _createTable() {
@@ -37,5 +43,16 @@ export default class GridView {
       table.appendChild(row);
     }
     this._table = table;
+  }
+
+  _handleEvents() {
+    this._table.addEventListener('click', ({ target }) => {
+      if ( target.tagName !== 'TD') return;
+      
+      const rowIndex = target.parentNode.rowIndex;
+      const cellIndex = target.cellIndex;
+
+      this.onClick(rowIndex, cellIndex);
+    });
   }
 }
