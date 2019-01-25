@@ -1,6 +1,7 @@
-/*global Grid, createButton, createElement, carry*/
+import Grid from './grid.js';
+import { createButton, createElement } from './lib/util.js';
 
-class Game {
+export default class Game {
   constructor(gridWidth, gridHeight, gridRows, gridCols, rootElement) {
     this.gridWidth = gridWidth;
     this.gridHeight = gridHeight;
@@ -98,9 +99,7 @@ class Game {
 
     const container = createElement('div', {
       className: 'controls'
-    });
-
-    container.append(startButton, resetButton, randomizeButton, speedSlider);
+    }, startButton, resetButton, randomizeButton, speedSlider);
 
     return container;
   }

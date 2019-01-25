@@ -1,4 +1,4 @@
-/* global Game */
+import Game from './game.js';
 
 const GRID_WIDTH = 1280;
 const GRID_HEIGHT = 720;

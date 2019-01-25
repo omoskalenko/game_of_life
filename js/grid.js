@@ -1,5 +1,6 @@
-/*global Cell */
-class Grid {
+import Cell from './cell.js';
+
+export default class Grid {
   constructor(gridWidth, gridHeight, gridRows, gridCols) {
     this.gridWidth = gridWidth;
     this.gridHeight = gridHeight;
@@ -18,7 +19,7 @@ class Grid {
 
   next() {
     this._forEachCell(cell => {
-      const numberOfNeighborth = this._numberOfNeighborth(cell);
+      const numberOfNeighborth = this._countOfNeighborth(cell);
 
       if(cell.alive) {
         if (numberOfNeighborth < 2) {
@@ -80,22 +81,22 @@ class Grid {
     this.element = table;
   }
 
-  _numberOfNeighborth({ row, col }) {
+  _countOfNeighborth({ row, col }) {
     let count = 0;
 
-    if(this._isNeighborthAlive(row - 1, col - 1)) count ++;
-    if(this._isNeighborthAlive(row - 1, col))     count ++;
-    if(this._isNeighborthAlive(row - 1, col + 1)) count ++;
-    if(this._isNeighborthAlive(row, col + 1))     count ++;
-    if(this._isNeighborthAlive(row + 1, col + 1)) count ++;
-    if(this._isNeighborthAlive(row + 1, col))     count ++;
-    if(this._isNeighborthAlive(row + 1, col - 1)) count ++;
-    if(this._isNeighborthAlive(row, col - 1))     count ++;
+    if(this._isCellAlive(row - 1, col - 1)) count ++;
+    if(this._isCellAlive(row - 1, col))     count ++;
+    if(this._isCellAlive(row - 1, col + 1)) count ++;
+    if(this._isCellAlive(row, col + 1))     count ++;
+    if(this._isCellAlive(row + 1, col + 1)) count ++;
+    if(this._isCellAlive(row + 1, col))     count ++;
+    if(this._isCellAlive(row + 1, col - 1)) count ++;
+    if(this._isCellAlive(row, col - 1))     count ++;
 
     return count;
   }
 
-  _isNeighborthAlive(row, col) {
+  _isCellAlive(row, col) {
     // if (this.grid[row][col] == 1) return false;
     if ( !this.grid[row] || !this.grid[row][col]) return false;
 
