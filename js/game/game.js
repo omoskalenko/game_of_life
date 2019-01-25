@@ -1,6 +1,5 @@
 import Grid from '../grid/grid.js';
 
-
 export default class Game {
   constructor(gridWidth, gridHeight, gridRows, gridCols, rootElement) {
     this._grid = new Grid(gridRows, gridCols); //композиция

@@ -1,10 +1,12 @@
 import { createButton, createElement } from '../lib/util.js';
 
 export default class View {
-  constructor(rootElement) {
+  constructor(gridView, rootElement) {
     this.rootElement = rootElement;
-    this.controls = {};
-
+    this.gridView = gridView;
+    
+    this._controls = {};
+    this._controlElements = null;
 
     this._init();
   }
@@ -14,7 +16,7 @@ export default class View {
   }
 
   _createControls() {
-    this.controls.startButton = createButton({
+    this._controls.startButton = createButton({
       className: 'material-icons',
       onclick: () => {
         if (this.isPlaying) {
@@ -26,7 +28,7 @@ export default class View {
       // textContent: 'play_arrow'
     }, 'play_arrow');
 
-    this.controls.resetButton = createButton({
+    this._controls.resetButton = createButton({
       className: 'material-icons',
       onclick: () => {
         this.reset();
@@ -34,7 +36,7 @@ export default class View {
       // textContent: 'replay'
     }, 'replay');
 
-    this.controls.randomizeButton = createButton({
+    this._controls.randomizeButton = createButton({
       className: 'material-icons',
       onclick: () => {
         this.randomize();
@@ -42,7 +44,7 @@ export default class View {
       // textContent: 'transform'
     }, 'transform');
 
-    this.controls.speedSlider = createElement('input', {
+    this._controls.speedSlider = createElement('input', {
       type: 'range',
       min: 0,
       max: 1000,
@@ -55,15 +57,17 @@ export default class View {
       }
     });
 
-    this.controlElements = createElement('div', {
+    this._controlElements = createElement('div', {
       className: 'controls'
-    }, this.controls.startButton, 
-    this.controls.resetButton,
-    this.controls.randomizeButton,
-    this.controls.speedSlider);
+    }, this._controls.startButton, 
+    this._controls.resetButton,
+    this._controls.randomizeButton,
+    this._controls.speedSlider);
   }
 
   _render() {
-    this.rootElement.appendChild(this.controlElements);
+    this.rootElement.appendChild(this.gridView.element);
+    this.rootElement.appendChild(this._controlElements);
+    
   }
 }
