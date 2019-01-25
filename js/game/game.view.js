@@ -4,9 +4,14 @@ export default class View {
   constructor(gridView, rootElement) {
     this.rootElement = rootElement;
     this.gridView = gridView;
-    
     this._controls = {};
     this._controlElements = null;
+
+    this.onGridClick = Function.prototype;
+    this.onStartButtonClick = Function.prototype;
+    this.onResetButtonClick = Function.prototype;
+    this.onRandomizeButtonClick = Function.prototype;
+    this.onSpeedSliderChenge = Function.prototype;
 
   }
   init() {
@@ -19,32 +24,42 @@ export default class View {
     this.gridView.updateCell(cell);
   }
 
+  updateControls(isPlaying) {
+    if (isPlaying) {
+      this._controls.startButton.textContent = 'pause'; 
+      this._controls.startButton.title = 'Остановить игру'; 
+      this._controls.randomizeButton.disabled = true;
+    } else {
+      this._controls.startButton.textContent = 'play_arrow'; 
+      this._controls.startButton.title = 'Запустить игру'; 
+      this._controls.randomizeButton.disabled = false;
+    }
+  } 
+
+  updateGrid(grid) {
+    this.gridView.update(grid);
+  }
+
+  resetControls() {
+    this._controls.startButton.textContent = 'play_arrow';
+    this._controls.startButton.title = 'Запустить игру';
+    this._controls.speedSlider.value = 0;
+  }
+
   _createControls() {
     this._controls.startButton = createButton({
       className: 'material-icons',
-      onclick: () => {
-        if (this.isPlaying) {
-          this.pause();
-        } else {
-          this.play();
-        }
-      }
-      // textContent: 'play_arrow'
+      onclick: () => this.onStartButtonClick()
     }, 'play_arrow');
 
     this._controls.resetButton = createButton({
       className: 'material-icons',
-      onclick: () => {
-        this.reset();
-      }
-      // textContent: 'replay'
+      onclick: () => this.onResetButtonClick()
     }, 'replay');
 
     this._controls.randomizeButton = createButton({
       className: 'material-icons',
-      onclick: () => {
-        this.randomize();
-      }
+      onclick: () => this.onRandomizeButtonClick()
       // textContent: 'transform'
     }, 'transform');
 
@@ -55,9 +70,7 @@ export default class View {
       step: 50,
       value: this.speed,
       onchange: ({ target }) => {
-        this.changeSpeed(target.value);
-        this.pause();
-        this.play();
+        this.onSpeedSliderChenge(Number(target.value));
       }
     });
 
@@ -73,5 +86,9 @@ export default class View {
     this.rootElement.appendChild(this.gridView.element);
     this.rootElement.appendChild(this._controlElements);
     
+  }
+
+  _handleStartButtonClick() {
+    this.onStartButtonClick();
   }
 }

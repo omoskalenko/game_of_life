@@ -4,8 +4,21 @@ export default class Controller {
     this.view = view;
 
     this.game.onCellStateChange = cell => view.updateCell(cell);
-    
+    this.game.onGridStateeChange = grid => view.updateGrid(grid);
+
     this.view.onGridClick = (row, col) => game.toggleCellState(row, col);
+    this.view.onStartButtonClick = () => {
+      this.game.toggle();
+      this.view.updateControls(this.game.isPlaying);
+    };
+    this.view.onResetButtonClick = () => {
+      this.game.reset();
+      this.view.resetControls();
+    };
+    this.view.onRandomizeButtonClick = () => this.game.randomize();
+
+    this.view.onSpeedSliderChange = speed => this.game.changeSpeed(speed);
+
     this.view.init();
   }
 }

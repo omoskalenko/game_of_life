@@ -47,14 +47,18 @@ export default class Grid {
       cell.isAlive = this._nextGrid[cell.row][cell.col];
       this._nextGrid[cell.row][cell.col] = false;
     });
+
+    return this._grid;
   }
 
   reset() {
     this._forEachCell(cell => cell.resetState());
+    return this._grid;
   }
 
   randomize() {
     this._forEachCell(cell => cell.setRandomeState());
+    return this._grid;
   }
 
   _init() {

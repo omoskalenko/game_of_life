@@ -8,6 +8,9 @@ export default class Game {
     this.interval = null;
     this.element = null;
 
+    this.onCellStateChange = Function.prototype;
+    this.onGridStateChange = Function.prototype;
+
     this.next = this.next.bind(this);
   }
 
@@ -18,7 +21,8 @@ export default class Game {
   }
 
   next() {
-    this._grid.next();
+    const nextGrid =  this._grid.next();
+    this.onGridStateChange(nextGrid);
   }
 
   play() {
@@ -34,13 +38,22 @@ export default class Game {
 
   reset() {
     this.pause();
-    this._grid.reset();
+    const resetGrid = this._grid.reset();
+    this.onGridStateChange(resetGrid);
+  }
+
+  toggle() {
+    if(this.isPlaying) {
+      this.pause();
+    } else {
+      this.play;
+    }
   }
 
   randomize() {
     if(this.isPlaying) return;
-    this.reset();
-    this._grid.randomize();
+    const randomeGrid = this._grid.randomize();
+    this.onGridStateChange(randomeGrid);
   }
 
   changeSpeed(value) {

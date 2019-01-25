@@ -23,6 +23,12 @@ export default class GridView {
     tableCell.classList.toggle('alive', cell.isAlive);
   }
   
+  update(grid) {
+    this._forEachCell((tableCell, rowIndex, cellIndex) => {
+      this._updateCell(tableCell, grid[rowIndex][cellIndex]);
+    });
+  }
+
   _init() {
     this._createTable();
     this._handleEvents();
@@ -54,5 +60,17 @@ export default class GridView {
 
       this.onClick(rowIndex, cellIndex);
     });
+  }
+
+  _forEachCell(fn) {
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.cols; j++) {
+        fn(this._table.rows[i].cells[j], i, j);
+      }
+    }
+  }
+
+  _updateCell(tableCell, cell) {
+    tableCell.classList.toggle('alive', cell.isAlive);
   }
 }
