@@ -54,7 +54,7 @@ export default class Grid {
       this._grid[i] = [];
       this._nextGrid[i] = [];
       for (let j = 0; j < this._gridCols; j++) {
-        const cell = new Cell(i, j);
+        const cell = new Cell(i, j); // композиция
         this._grid[i][j] = cell;
         this._nextGrid[i][j] = false;
       }

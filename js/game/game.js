@@ -1,7 +1,7 @@
 import Grid from '../grid/grid.js';
 
 export default class Game {
-  constructor(gridWidth, gridHeight, gridRows, gridCols, rootElement) {
+  constructor(gridRows, gridCols) {
     this._grid = new Grid(gridRows, gridCols); //композиция
     this.isPlaying = false;
     this.speed = 450;
