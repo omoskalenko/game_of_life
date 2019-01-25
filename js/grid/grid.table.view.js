@@ -1,16 +1,11 @@
 import { createButton, createElement } from '../lib/util.js';
+import GridView from './grid.view.js';
 
-export default class GridView {
+export default class TableGridView extends GridView {
   constructor(width, heigth, rows, cols) {
-    this.gridWidth = width;
-    this.gridHeigth = heigth;
-    this.cellWidth = width / cols;
-    this.cellHeight = heigth / rows;
-    this.rows = rows;
-    this.cols = cols;
+    super(width, heigth, rows, cols);
 
     this._table = null;
-    this.onClick = Function.prototype;
     this._init();
   }
 
@@ -23,9 +18,15 @@ export default class GridView {
     tableCell.classList.toggle('alive', cell.isAlive);
   }
   
-  update(grid) {
+  updateGrid(grid) {
     this._forEachCell((tableCell, rowIndex, cellIndex) => {
       this._updateCell(tableCell, grid[rowIndex][cellIndex]);
+    });
+  }
+
+  resetGrid() {
+    this._forEachCell(tableCell => {
+      this._resetCell(tableCell)
     });
   }
 
@@ -62,15 +63,19 @@ export default class GridView {
     });
   }
 
+  _updateCell(tableCell, cell) {
+    tableCell.classList.toggle('alive', cell.isAlive);
+  }
+  
+  _resetCell(tableCell) {
+    tableCell.classList.remove('alive');
+  }
+
   _forEachCell(fn) {
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
         fn(this._table.rows[i].cells[j], i, j);
       }
     }
-  }
-
-  _updateCell(tableCell, cell) {
-    tableCell.classList.toggle('alive', cell.isAlive);
-  }
+  } 
 }

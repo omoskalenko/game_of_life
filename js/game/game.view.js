@@ -25,7 +25,7 @@ export default class View {
   }
 
   updateGrid(grid) {
-    this.gridView.update(grid);
+    this.gridView.updateGrid(grid);
   }
 
   updateControls(isPlaying) {
