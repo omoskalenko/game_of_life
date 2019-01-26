@@ -3,7 +3,7 @@ import { createButton, createElement } from '../lib/util.js';
 export default class GridView {
   constructor(width, heigth, rows, cols) {
     this.gridWidth = width;
-    this.gridHeigth = heigth;
+    this.gridHeight = heigth;
     this.cellWidth = width / cols;
     this.cellHeight = heigth / rows;
     this.rows = rows;
@@ -16,15 +16,11 @@ export default class GridView {
     throw new Error('Abstract property'); 
   }
 
-  updateCell(cell) {
+  update(grid) {
     throw new Error('Abstract method'); 
   }
 
-  updateGrid(grid) {
-    throw new Error('Abstract method'); 
-  }
-
-  resetGrid() {
+  reset() {
     throw new Error('Abstract method'); 
   }
 }

@@ -40,9 +40,7 @@ export default class CanvasGridView extends GridView {
   }
 
   _handleEvents() {
-    this._canvas.addEventListener('click', event => {
-      const { offsetX, offsetY } = event;
-
+    this._canvas.addEventListener('click',  ({ offsetX, offsetY })  => {
       this._getCellPositionFromCoords(offsetX, offsetY);
     });
   }

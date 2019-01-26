@@ -18,28 +18,33 @@ export default class Game {
     const cell = this._grid.toggleCellState(row, col);
 
     this.onGridStateChange(cell);
+
+    return this._grid;
   }
 
   next() {
     const nextGrid =  this._grid.next();
     this.onGridStateChange(nextGrid);
+    return this._grid;
   }
 
   play() {
     this.isPlaying = true;
     this._starInterval();
-    
+    return this._grid;
   }
 
   pause() {
     this.isPlaying = false;
     this._stopInterval();
+    return this._grid;
   }
 
   reset() {
     this.pause();
     const resetGrid = this._grid.reset();
     this.onGridStateChange(resetGrid);
+    return this._grid;
   }
 
   toggle() {
@@ -48,18 +53,21 @@ export default class Game {
     } else {
       this.play();
     }
+    return this._grid;
   }
 
   randomize() {
     if(this.isPlaying) return;
     const randomeGrid = this._grid.randomize();
     this.onGridStateChange(randomeGrid);
+    return this._grid;
   }
 
   changeSpeed(value) {
     this.speed = 1000 - value;
     this._stopInterval();
     this._starInterval();
+    return this._grid;
   }
 
   _starInterval() {
